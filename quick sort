@@ -1,0 +1,55 @@
+#include<iostream>
+#define MAX 100
+using namespace std;
+
+void swap(int* x,int* y)
+{
+	int t = *x;
+	*x = *y;
+	*y = t;
+}
+void quick(int arr[],int low,int up);
+int partition(int arr[],int low,int up);
+
+int main()
+{
+	int array[MAX],n,i;
+	cout<<"enter the no of elements : ";
+	cin>>n;
+	for(i=0;i<n;i++)
+	{
+		cout<<"enter element "<<i+1<<": ";
+		cin>>array[i];
+	}
+	quick(array,0,n-1);
+	cout<<"sorted list is : ";
+	for(i=0;i<n;i++)
+		cout<<array[i]<<" ";
+	return 0;
+}
+void quick(int arr[],int low,int up)
+{
+	int pivloc;
+	if(low>=up)
+		return;//terminating condition
+	pivloc=partition(arr,low,up);
+	quick(arr,low,pivloc-1);
+	quick(arr,pivloc+1,up);
+}
+int partition(int arr[],int low,int up)
+{
+	int temp,i,j,pivot;
+	i=low-1;
+	//j=low;
+	pivot=arr[up];
+	for(j=low;j<=up-1;j++)
+	{
+		if(arr[j]<=pivot)
+		{
+			i++;
+			swap(&arr[i],&arr[j]);
+		}
+	}
+	swap(&arr[i+1],&arr[up]);
+	return i+1;
+}
